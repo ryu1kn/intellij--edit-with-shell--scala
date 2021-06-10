@@ -9,7 +9,6 @@ import com.intellij.openapi.ui.Messages
 import com.intellij.pom.Navigatable
 import org.jetbrains.annotations.{Nls, NotNull, Nullable}
 import org.jetbrains.scala.samples.SamplePluginBundle
-import org.jetbrains.scala.samples.services.{ApplicationHelloService, ProjectHelloService}
 
 import javax.swing._
 
@@ -32,8 +31,6 @@ class PopupDialogAction extends AnAction():
     List(
       selectedText(event),
       navigationName(event),
-      applicationHelloInfo,
-      projectHelloInfo(event.getProject)
     ).filter(_ != null).mkString("\n")
 
   private val message = SamplePluginBundle.message(_: String, _: String)
@@ -44,12 +41,6 @@ class PopupDialogAction extends AnAction():
   private def navigationName(event: AnActionEvent) =
     val nav = event.getData(CommonDataKeys.NAVIGATABLE)
     if nav != null then message("selected.element.tostring", nav.toString) else null
-
-  private def projectHelloInfo(currentProject: Project) =
-    ProjectHelloService.getInstance(currentProject).getProjectHelloInfo
-
-  private def applicationHelloInfo =
-    ApplicationHelloService.getInstance.getApplicationHelloInfo
 
   /**
    * Determines whether this menu item is available for the current context.

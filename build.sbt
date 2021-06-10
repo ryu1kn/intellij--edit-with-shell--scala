@@ -5,7 +5,7 @@ lazy val editWithShell =
     .enablePlugins(SbtIdeaPlugin)
     .settings(
       version := "0.0.1-SNAPSHOT",
-      scalaVersion := "2.13.2",
+      scalaVersion := "3.0.0",
       ThisBuild / intellijPluginName := "Edit with Shell",
       ThisBuild / intellijBuild      := "211.7442.40",
       ThisBuild / intellijPlatform   := IntelliJPlatform.IdeaCommunity,

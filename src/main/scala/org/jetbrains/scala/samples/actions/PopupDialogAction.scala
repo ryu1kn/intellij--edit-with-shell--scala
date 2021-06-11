@@ -1,18 +1,11 @@
 // Copyright 2000-2020 JetBrains s.r.o. and other contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package org.jetbrains.scala.samples.actions
 
-import com.intellij.openapi.actionSystem.AnAction
-import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.openapi.project.Project
+import com.intellij.openapi.actionSystem.{AnAction, AnActionEvent, CommonDataKeys}
 import com.intellij.openapi.ui.Messages
-import com.intellij.pom.Navigatable
-import org.jetbrains.annotations.{Nls, NotNull, Nullable}
 import org.jetbrains.scala.samples.SamplePluginBundle
 
-import javax.swing._
-
-class PopupDialogAction extends AnAction():
+class PopupDialogAction extends AnAction() {
 
   /**
    * Gives the user feedback when the dynamic action menu is chosen.
@@ -38,9 +31,10 @@ class PopupDialogAction extends AnAction():
   private def selectedText(event: AnActionEvent) =
     message("gettext.selected", event.getPresentation.getText)
 
-  private def navigationName(event: AnActionEvent) =
+  private def navigationName(event: AnActionEvent) = {
     val nav = event.getData(CommonDataKeys.NAVIGATABLE)
-    if nav != null then message("selected.element.tostring", nav.toString) else null
+    if (nav != null) message("selected.element.tostring", nav.toString) else null
+  }
 
   /**
    * Determines whether this menu item is available for the current context.
@@ -48,6 +42,8 @@ class PopupDialogAction extends AnAction():
    *
    * @param e Event received when the associated group-id menu is chosen.
    */
-  override def update(e: AnActionEvent): Unit = // Set the availability based on whether a project is open
+  override def update(e: AnActionEvent): Unit = { // Set the availability based on whether a project is open
     val project = e.getProject
-    e.getPresentation.setEnabledAndVisible(project != null)
+    e.getPresentation.setEnabledAndVisible (project != null)
+  }
+}

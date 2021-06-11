@@ -1,9 +1,9 @@
 // Copyright 2000-2020 JetBrains s.r.o. and other contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
-package org.jetbrains.scala.samples.actions
+package io.ryuichi.actions
 
 import com.intellij.openapi.actionSystem.{AnAction, AnActionEvent, CommonDataKeys}
 import com.intellij.openapi.ui.Messages
-import org.jetbrains.scala.samples.SamplePluginBundle
+import io.ryuichi.SamplePluginBundle
 
 class PopupDialogAction extends AnAction() {
 

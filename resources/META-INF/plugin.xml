@@ -14,8 +14,8 @@
     <resource-bundle>messages.SamplePluginBundle</resource-bundle>
 
     <actions>
-        <action id="org.jetbrains.scala.samples.actions.PopupDialogAction"
-                class="org.jetbrains.scala.samples.actions.PopupDialogAction">
+        <action id="io.ryuichi.actions.PopupDialogAction"
+                class="io.ryuichi.actions.PopupDialogAction">
             <add-to-group group-id="ToolsMenu" anchor="first"/>
         </action>
     </actions>

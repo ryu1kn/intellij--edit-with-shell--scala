@@ -4,6 +4,7 @@ package io.ryuichi.actions
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.{AnActionEvent, CommonDataKeys}
 import com.intellij.openapi.command.WriteCommandAction
+import sys.process._
 
 // Copied from https://plugins.jetbrains.com/docs/intellij/working-with-text.html
 class ExecShellAction extends AnAction() {
@@ -19,7 +20,7 @@ class ExecShellAction extends AnAction() {
     val end = primaryCaret.getSelectionEnd
     // Replace the selection with a fixed string.
     // Must do this document change in a write action context.
-    WriteCommandAction.runWriteCommandAction(project, (() => document.replaceString(start, end, "editor_basics")): Runnable)
+    WriteCommandAction.runWriteCommandAction(project, (() => document.replaceString(start, end, Seq("bash", "-c", "ls -1 | sort -r").!!)): Runnable)
     // De-select the text range that was just replaced
     primaryCaret.removeSelection()
   }
@@ -28,6 +29,6 @@ class ExecShellAction extends AnAction() {
     val project = e.getProject
     val editor = e.getData(CommonDataKeys.EDITOR)
     // Set visibility and enable only in case of existing project and editor and if a selection exists
-    e.getPresentation.setEnabledAndVisible(project != null && editor != null && editor.getSelectionModel.hasSelection)
+    e.getPresentation.setEnabledAndVisible(project != null && editor != null)
   }
 }

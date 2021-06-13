@@ -1,3 +1,12 @@
-# Edit with Shell
+# Edit with Shell for IntelliJ
 
-To run the plugin, open the project with IntelliJ, then run or debug the `editWithShell` run configuration.
+## Run the plugin
+
+```sh
+sbt runIDE
+```
+
+## References
+
+* [1. Working with Text](https://plugins.jetbrains.com/docs/intellij/working-with-text.html)
+* [Multiple Carets](https://plugins.jetbrains.com/docs/intellij/multiple-carets.html)

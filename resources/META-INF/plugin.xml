@@ -18,6 +18,12 @@
                 class="io.ryuichi.actions.PopupDialogAction">
             <add-to-group group-id="ToolsMenu" anchor="first"/>
         </action>
+        <action id="io.ryuichi.actions.ExecShellAction"
+                class="io.ryuichi.actions.ExecShellAction"
+                text="Editor Replace Text"
+                description="Replaces selected text with 'Replacement'.">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">

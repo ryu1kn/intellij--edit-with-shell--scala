@@ -1,10 +1,48 @@
 // Copyright 2000-2020 JetBrains s.r.o. and other contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package io.ryuichi.actions
 
-import com.intellij.openapi.actionSystem.AnAction
-import com.intellij.openapi.actionSystem.{AnActionEvent, CommonDataKeys}
+import com.intellij.openapi.actionSystem.{AnAction, AnActionEvent, CommonDataKeys}
 import com.intellij.openapi.command.WriteCommandAction
-import sys.process._
+import com.intellij.openapi.ui.popup.{JBPopupFactory, ListPopupStep, ListSeparator, MnemonicNavigationFilter, PopupStep, SpeedSearchFilter}
+
+import java.util
+import javax.swing.Icon
+import scala.jdk.CollectionConverters._
+import scala.sys.process._
+
+class MyListPopupStep extends ListPopupStep[String] {
+  override def getValues: util.List[String] = List("foo-a", "foo-b").asJava
+
+  override def isSelectable(value: String): Boolean = true
+
+  override def getIconFor(value: String): Icon = null
+
+  override def getTextFor(value: String): String = value
+
+  override def getSeparatorAbove(value: String): ListSeparator = null
+
+  override def getDefaultOptionIndex: Int = 0
+
+  override def getTitle: String = "foo"
+
+  override def onChosen(selectedValue: String, finalChoice: Boolean): PopupStep[_] = this
+
+  override def hasSubstep(selectedValue: String): Boolean = false
+
+  override def canceled(): Unit = {}
+
+  override def isMnemonicsNavigationEnabled: Boolean = false
+
+  override def getMnemonicNavigationFilter: MnemonicNavigationFilter[String] = null
+
+  override def isSpeedSearchEnabled: Boolean = false
+
+  override def getSpeedSearchFilter: SpeedSearchFilter[String] = null
+
+  override def isAutoSelectionEnabled: Boolean = true
+
+  override def getFinalRunnable: Runnable = () => {}
+}
 
 // Copied from https://plugins.jetbrains.com/docs/intellij/working-with-text.html
 class ExecShellAction extends AnAction() {
@@ -18,6 +56,12 @@ class ExecShellAction extends AnAction() {
     val primaryCaret = editor.getCaretModel.getPrimaryCaret
     val start = primaryCaret.getSelectionStart
     val end = primaryCaret.getSelectionEnd
+
+    // Playing with a popup to enter a shell command
+    val popupFactory = JBPopupFactory.getInstance()
+    val listPopup = popupFactory.createListPopup(new MyListPopupStep())
+    listPopup.showInBestPositionFor(editor)
+
     // Replace the selection with a fixed string.
     // Must do this document change in a write action context.
     WriteCommandAction.runWriteCommandAction(project, (() => document.replaceString(start, end, Seq("bash", "-c", "ls -1 | sort -r").!!)): Runnable)

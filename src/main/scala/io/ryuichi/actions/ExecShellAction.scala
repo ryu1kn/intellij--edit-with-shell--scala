@@ -3,46 +3,13 @@ package io.ryuichi.actions
 
 import com.intellij.openapi.actionSystem.{AnAction, AnActionEvent, CommonDataKeys}
 import com.intellij.openapi.command.WriteCommandAction
-import com.intellij.openapi.ui.popup.{JBPopupFactory, ListPopupStep, ListSeparator, MnemonicNavigationFilter, PopupStep, SpeedSearchFilter}
+import com.intellij.openapi.ui.popup.JBPopupFactory
+import com.intellij.openapi.ui.popup.util.BaseListPopupStep
 
-import java.util
-import javax.swing.Icon
 import scala.jdk.CollectionConverters._
 import scala.sys.process._
 
-class MyListPopupStep extends ListPopupStep[String] {
-  override def getValues: util.List[String] = List("foo-a", "foo-b").asJava
-
-  override def isSelectable(value: String): Boolean = true
-
-  override def getIconFor(value: String): Icon = null
-
-  override def getTextFor(value: String): String = value
-
-  override def getSeparatorAbove(value: String): ListSeparator = null
-
-  override def getDefaultOptionIndex: Int = 0
-
-  override def getTitle: String = "foo"
-
-  override def onChosen(selectedValue: String, finalChoice: Boolean): PopupStep[_] = this
-
-  override def hasSubstep(selectedValue: String): Boolean = false
-
-  override def canceled(): Unit = {}
-
-  override def isMnemonicsNavigationEnabled: Boolean = false
-
-  override def getMnemonicNavigationFilter: MnemonicNavigationFilter[String] = null
-
-  override def isSpeedSearchEnabled: Boolean = false
-
-  override def getSpeedSearchFilter: SpeedSearchFilter[String] = null
-
-  override def isAutoSelectionEnabled: Boolean = true
-
-  override def getFinalRunnable: Runnable = () => {}
-}
+class MyListPopupStep extends BaseListPopupStep[String]("foo", List("item-a", "item-b").asJava)
 
 // Copied from https://plugins.jetbrains.com/docs/intellij/working-with-text.html
 class ExecShellAction extends AnAction() {

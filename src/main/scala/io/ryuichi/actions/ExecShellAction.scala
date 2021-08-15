@@ -5,6 +5,8 @@ import com.intellij.openapi.actionSystem.{AnAction, AnActionEvent, CommonDataKey
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.openapi.ui.popup.util.BaseListPopupStep
+import com.intellij.ui.{AnActionButton, AnActionButtonRunnable, CollectionListModel, ToolbarDecorator}
+import com.intellij.ui.components.JBList
 
 import scala.jdk.CollectionConverters._
 import scala.sys.process._
@@ -26,8 +28,11 @@ class ExecShellAction extends AnAction() {
 
     // Playing with a popup to enter a shell command
     val popupFactory = JBPopupFactory.getInstance()
-    val listPopup = popupFactory.createListPopup(new MyListPopupStep())
-    listPopup.showInBestPositionFor(editor)
+    val list = new JBList("item-c", "item-d")
+    val decorator = ToolbarDecorator.createDecorator(list, new CollectionListModel())
+    val popupBuilder = popupFactory.createComponentPopupBuilder(
+      decorator.setAddAction(_ => println("whoooooo")).createPanel(), null)
+    popupBuilder.createPopup().showInBestPositionFor(editor)
 
     // Replace the selection with a fixed string.
     // Must do this document change in a write action context.
